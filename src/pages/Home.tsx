@@ -1,6 +1,6 @@
 import Services from "@/components/Services";
 import Header from "@/components/Header";
-// import Footer from "@/components/Footer";
+import Footer from "@/components/Footer";
 import Templates from "@/components/Templates";
 
 export default function Home() {
@@ -287,12 +287,10 @@ export default function Home() {
           </svg>
         </div>
       </section> 
-
       <Services />
-
       <Templates />
 
-      {/* <Footer/> */}
+      <Footer/>
     </>
   )
 }
