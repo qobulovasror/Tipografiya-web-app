@@ -30,7 +30,7 @@ export default function Home() {
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                   <a
                     href="https://nextjstemplates.com/templates/saas-starter-startup"
-                    className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-body-color dark:text-body-color-dark duration-300 ease-in-out hover:bg-primary/80"
+                    className="rounded-sm px-8 py-4 text-base text-white font-semibold bg-blue-700 hover:bg-blue-800 duration-300 ease-in-out hover:bg-blue/80"
                   >
                     🔥 Get Pro
                   </a>

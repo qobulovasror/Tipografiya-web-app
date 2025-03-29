@@ -7,7 +7,7 @@ const SingleTemplate = ({ template }: { template: Template }) => {
   const { title, img, about, category, link } = template;
   return (
     <>
-      <Card className="group relative overflow-hidden rounded-lg shadow-lg transition duration-300 hover:shadow-2xl dark:hover:shadow-gray-800">
+      <Card className="group relative overflow-hidden rounded-lg shadow-lg transition duration-300 hover:shadow-2xl dark:hover:shadow-gray-800 py-0">
         <a href={link} className="relative block">
           <AspectRatio ratio={37 / 22} className="overflow-hidden rounded-t-lg">
             <img

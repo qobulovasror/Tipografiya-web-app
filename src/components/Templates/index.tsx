@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/tabs"
 import { TemplatesTitle } from './TemplateTitle'
 
-import TemplateGroups from "./templateGroups"
+import TemplateGroups from "./TemplateGroups"
 
 
 export default function Templates() {
