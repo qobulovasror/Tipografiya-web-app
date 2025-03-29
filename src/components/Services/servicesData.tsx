@@ -15,7 +15,7 @@ const servicesData: Services[] = [
     title: "Create banners",
     paragraph:
       "Tuae nam ex similique incidunt expedita exerci tationem laudantium. Repellendus quisquam numquam perferendis earum sapiente non tempore? Fugit repellat ut maiores.",
-    link: "#",    
+    link: "/create-banner",    
     },
   {
     id: 1,
@@ -31,7 +31,7 @@ const servicesData: Services[] = [
     title: "Create your visit card",
     paragraph:
       "Tuae nam ex similique incidunt expedita exerci tationem laudantium. Repellendus quisquam numquam perferendis earum sapiente non tempore? Fugit repellat ut maiores.",
-    link: "#",
+    link: "/create-visit-card",
     },
   {
     id: 1,

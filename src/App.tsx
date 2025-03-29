@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider, useTheme } from "@/components/theme-provider"
 import Home from "./pages/Home";
 import { useEffect } from 'react';
+import CreateVisitCard from './pages/CreateVisitCard';
 
 function App() {
   const { theme } = useTheme();
@@ -16,6 +17,9 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/create-visit-card" element={<CreateVisitCard />} />
+            <Route path="/create-banner" element={<CreateVisitCard />} />
+            <Route path="/create-invitation-card" element={<CreateVisitCard />} />
           </Routes>
         </Router>
       </ThemeProvider>
