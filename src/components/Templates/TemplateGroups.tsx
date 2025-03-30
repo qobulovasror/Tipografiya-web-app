@@ -44,7 +44,7 @@ export default function TemplateGroups({ mode }: Props) {
               <PaginationPrevious className='hover:bg-gray-700 hover:cursor-pointer'/>
             </PaginationItem>
             <span className="px-4 py-2 bg-gray-700 rounded-lg">Page {currentPage} of {totalPages}</span>
-            <PaginationItem onClick={() => setCurrentPage((prev: number) => Math.min(prev + 1, totalPages))} hidden={currentPage === totalPages}>
+            <PaginationItem onClick={() => setCurrentPage((prev: number) => Math.min(prev + 1, totalPages))} hidden={currentPage === totalPages || totalPages==0}>
               <PaginationNext className='hover:bg-gray-700 hover:cursor-pointer' />
             </PaginationItem>
           </PaginationContent>
