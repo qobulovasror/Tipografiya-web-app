@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider, useTheme } from "@/components/theme-provider"
 import Home from "./pages/Home";
 import { useEffect } from 'react';
-import CreateVisitCard from './pages/CreateVisitCard';
+import CreateVisitCard from './pages/VisitCard/CreateVisitCard';
 
 function App() {
   const { theme } = useTheme();
