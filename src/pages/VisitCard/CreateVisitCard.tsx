@@ -109,7 +109,7 @@ export default function CreateVisitCard() {
       </div>
 
       {/* main workspace */}
-      <div className="w-full flex" style={{ height: "calc(100vh - 100px)" }}>
+      <div className="w-full flex" style={{ height: "calc(100vh - 60px)" }}>
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel minSize={27} maxSize={27} defaultSize={27}>
             {/* menu */}
@@ -135,17 +135,11 @@ export default function CreateVisitCard() {
 
                   {/* icon */}
                   <TabsContent value="addicon" className="flex flex-col justify-center px-3">
-                    <h4 className="text-2xl text-center">Add icon</h4>
-                    <Label>select icon</Label>
-                    <Card className="my-2">
-                      <CardContent className="flex flex-row flex-wrap gap-2 scroll-auto" >
-                        <Icons/>
-                      </CardContent>
-                    </Card>
+                    <Icons/>
                   </TabsContent>
 
                   {/* bg */}
-                  <TabsContent value="addbg" className="flex flex-col justify-center px-3 scroll-auto">
+                  <TabsContent value="addbg" className="flex flex-col justify-center px-3">
                     <h4 className="text-2xl text-center">Change background</h4>
                     <Label className="mt-2">select color</Label>
                     <Card className="my-2">
@@ -153,14 +147,13 @@ export default function CreateVisitCard() {
                         <BackgroundColors/>
                       </CardContent>
                     </Card>
-                    <Label className="mt-4">select imgages</Label>
-                    <Card className="my-2">
+                    <Label className="mt-2">select imgages</Label>
+                    <Card className="my-2 h-85" style={{overflowY: "auto"}}>
                       <CardContent className="flex flex-row flex-wrap justify-center gap-2 scroll-auto" >
                         <BackgroundImages/>
                       </CardContent>
                     </Card>
                   </TabsContent>
-
                 </div>
               </div>
             </Tabs>
@@ -208,9 +201,6 @@ export default function CreateVisitCard() {
                 </Card>
               </TabsContent>
             </Tabs>
-
-
-
 
           </ResizablePanel>
           <ResizableHandle className="cursor-ew-resize bg-black" />

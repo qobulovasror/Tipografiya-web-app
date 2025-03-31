@@ -1,7 +1,5 @@
 
-
 const bgs = [
-  "#FFFFFF",  // White (Classic & Professional)
   "#F8F9FA",  // Light Gray (Soft & Minimalist)
   "#E3E3E3",  // Silver Gray (Modern & Clean)
   "#FFD700",  // Gold (Luxurious & Premium)
@@ -22,7 +20,6 @@ const bgs = [
   "linear-gradient(to right, #A8DADC, #457B9D)",
   "linear-gradient(to right, #2ECC71, #1D3557)",
   "linear-gradient(to right, #FFC107, #F4A261)",
-  "linear-gradient(to right, #34495E, #000000)",
 
 ]
 
@@ -30,7 +27,7 @@ export function BackgroundColors() {
   return (
     <>
       {bgs.map((bg, index) => (
-        <div key={index} className="w-10 h-10 hover:cursor-pointer" style={{ background: bg }}></div>
+        <div key={index} className="w-9 h-9 hover:cursor-pointer" style={{ background: bg }}></div>
       ))}
     </>
   )
@@ -38,13 +35,18 @@ export function BackgroundColors() {
 
 
 
-
 export function BackgroundImages() {
   return (
     <>
-      {bgs.map((bg, index) => (
-        <div key={index} className="w-10 h-10 hover:cursor-pointer" style={{ backgroundColor: bg }}></div>
-      ))}
+      <div className="grid grid-cols-2">
+        {Array(24).fill(1).map((_, index) => (
+          <img
+            key={index}
+            src={`/images/img_for_cardBg/imgs${index+1}.jpg`}
+            className="w-full h-18 object-cover rounded-lg shadow-md m-1 px-1"
+          />
+        ))}
+      </div>
     </>
   )
 }
