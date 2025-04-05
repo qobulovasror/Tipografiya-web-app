@@ -35,6 +35,12 @@ import { Label } from "@/components/ui/label";
 import Icons from "./Icons";
 import {BackgroundColors, BackgroundImages} from "./Backgrounds";
 
+// import { html2pdf } from 'html2pdf-ts';
+import AddImages from "./AddImages";
+
+import generatePDF from 'react-to-pdf';
+
+
 export default function CreateVisitCard() {
   const [customText, setCustomText] = useState("Your Visit Card");
   const [selectedFont, setSelectedFont] = useState("Roboto");
@@ -50,7 +56,7 @@ export default function CreateVisitCard() {
 
   const [elements, setElements] = useState([
     { id: 1, type: "text", content: "John Doe", x: 20, y: 30 },
-    { id: 2, type: "image", content: "https://via.placeholder.com/50", x: 100, y: 50 },
+    { id: 2, type: "image", content: "/images/img_for_cardImg/img1.png", x: 100, y: 50 },
     { id: 3, type: "icon", content: "☎", x: 50, y: 100 }
   ]);
   const addElement = (type) => {
@@ -59,7 +65,7 @@ export default function CreateVisitCard() {
       {
         id: elements.length + 1,
         type,
-        content: type === "text" ? "New Text" : type === "image" ? "https://via.placeholder.com/50" : "★",
+        content: type === "text" ? "New Text" : type === "image" ? "/images/img_for_cardImg/img1.png" : "★",
         x: 50,
         y: 50
       }
@@ -71,7 +77,6 @@ export default function CreateVisitCard() {
   const { editor, onReady } = useFabricJSEditor();
   const onAddCircle = async () => {
     // editor.addCircle();
-
     const textF = await FabricText.fromObject({
       left: 100,
       top: 100,
@@ -91,7 +96,6 @@ export default function CreateVisitCard() {
     );
     editor.canvas.add(image);
   };
-
 
   return (
     <>
@@ -148,9 +152,20 @@ export default function CreateVisitCard() {
                       </CardContent>
                     </Card>
                     <Label className="mt-2">select imgages</Label>
-                    <Card className="my-2 h-85" style={{overflowY: "auto"}}>
+                    <Card className="my-2 h-85" style={{overflowY: "auto", scrollbarWidth: "thin"}}>
                       <CardContent className="flex flex-row flex-wrap justify-center gap-2 scroll-auto" >
                         <BackgroundImages/>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+
+                  {/* addimg */}
+                  <TabsContent value="addimg" className="flex flex-col justify-center px-3">
+                    <h4 className="text-2xl text-center">Add image</h4>
+                    <Label className="mt-2">select img</Label>
+                    <Card className="my-2">
+                      <CardContent className="flex flex-row flex-wrap justify-center gap-2 scroll-auto" >
+                        <AddImages/>
                       </CardContent>
                     </Card>
                   </TabsContent>
@@ -167,7 +182,7 @@ export default function CreateVisitCard() {
                 <TabsTrigger value="card_back" className="w-full h-full p-2 flex-col data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md">Back</TabsTrigger>
               </TabsList>
               <TabsContent value="card_front" className="w-full h-full flex justify-center items-center py-10 bg-gray-300 dark:bg-gray-500">
-                <Card className="bg-white rounded-lg p-2 border border-gray-300" style={{ width: "577.612px", height: "324.800px" }}>
+                <Card  className="bg-white rounded-lg p-2 border border-gray-300" style={{ width: "577.612px", height: "324.800px" }}>
                   <FabricJSCanvas className="sample-canvas w-full h-full" onReady={onReady} />
                   {elements.map((el) => (
                     <Rnd
@@ -205,8 +220,7 @@ export default function CreateVisitCard() {
           </ResizablePanel>
           <ResizableHandle className="cursor-ew-resize bg-black" />
           {/* left panet shows all texts */}
-          <ResizablePanel minSize={20} maxSize={20} defaultSize={22} className="flex-col" >
-
+          <ResizablePanel minSize={20} maxSize={22} defaultSize={22} className="flex-col" >
             <Drawer>
               <div className="flex p-2 items-center justify-center">
                 <Label>T1</Label>

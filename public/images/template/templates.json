@@ -1,0 +1,25 @@
+[
+  {
+    "id": 1,
+    "name": "Minimalist Black",
+    "background": "#333",
+    "textColor": "#fff",
+    "fontFamily": "Arial",
+    "elements": [
+      {"type": "text", "value": "Your Name", "size": 24, "x": 50, "y": 50},
+      {"type": "text", "value": "Your Job", "size": 18, "x": 50, "y": 80},
+      {"type": "icon", "value": "phone", "x": 20, "y": 120}
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Modern Blue",
+    "background": "#1E3A8A",
+    "textColor": "#ffffff",
+    "fontFamily": "Poppins",
+    "elements": [
+      {"type": "text", "value": "John Doe", "size": 22, "x": 40, "y": 60},
+      {"type": "text", "value": "Designer", "size": 16, "x": 40, "y": 90}
+    ]
+  }
+]
