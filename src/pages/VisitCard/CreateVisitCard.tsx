@@ -1,9 +1,10 @@
+import { useEffect, useState } from "react";
 import { BreadcrumbMenu } from "@/components/Header/BreadcrumbMenu";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { DownloadIcon,  MixIcon, TextIcon, TransparencyGridIcon, Pencil2Icon } from "@radix-ui/react-icons"
-import { BoldIcon, ImageIcon, ItalicIcon, Trash2Icon, UnderlineIcon } from "lucide-react";
-
+import { DownloadIcon, MixIcon, TextIcon, TransparencyGridIcon, Pencil2Icon } from "@radix-ui/react-icons"
+import { BoldIcon, ImageIcon, ItalicIcon, Sun, Trash2Icon, UnderlineIcon } from "lucide-react";
+import {useTheme} from "@/components/theme-provider"
 import {
   ResizableHandle,
   ResizablePanel,
@@ -22,43 +23,40 @@ import {
 } from "@/components/ui/drawer"
 import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react";
 import { FabricImage, FabricText } from "fabric";
-
 import { Rnd } from "react-rnd";
-
-
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Select, SelectItem, SelectContent } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label";
-import Icons from "./Icons";
-import {BackgroundColors, BackgroundImages} from "./Backgrounds";
 
-// import { html2pdf } from 'html2pdf-ts';
+import { BackgroundColors, BackgroundImages } from "./Backgrounds";
 import AddImages from "./AddImages";
-
-import generatePDF from 'react-to-pdf';
+import Icons from "./Icons";
+import { useParams } from "react-router-dom";
 
 
 export default function CreateVisitCard() {
-  const [customText, setCustomText] = useState("Your Visit Card");
+  const { id } = useParams();
+  const {theme} = useTheme()
+  const [isMobile, setIsMobile] = useState(false);
   const [selectedFont, setSelectedFont] = useState("Roboto");
-  const fonts = [
-    "Roboto",
-    "Open Sans",
-    "Montserrat",
-    "Lato",
-    "Poppins",
-    "Playfair Display",
-    "Raleway",
-  ];
+  // const fonts = [
+  //   "Roboto",
+  //   "Open Sans",
+  //   "Montserrat",
+  //   "Lato",
+  //   "Poppins",
+  //   "Playfair Display",
+  //   "Raleway",
+  // ];
 
   const [elements, setElements] = useState([
     { id: 1, type: "text", content: "John Doe", x: 20, y: 30 },
     { id: 2, type: "image", content: "/images/img_for_cardImg/img1.png", x: 100, y: 50 },
     { id: 3, type: "icon", content: "☎", x: 50, y: 100 }
   ]);
+  const [cardBackground, setCardBackground] = useState("#fff")
+
   const addElement = (type) => {
     setElements([
       ...elements,
@@ -71,8 +69,6 @@ export default function CreateVisitCard() {
       }
     ]);
   };
-
-
 
   const { editor, onReady } = useFabricJSEditor();
   const onAddCircle = async () => {
@@ -96,6 +92,16 @@ export default function CreateVisitCard() {
     );
     editor.canvas.add(image);
   };
+
+  
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
+  if (isMobile) {
+    return <div style={{ padding: '20px', textAlign: 'center' }}>⚠️ Please use this app on a desktop device.</div>;
+  }
 
   return (
     <>
@@ -139,7 +145,7 @@ export default function CreateVisitCard() {
 
                   {/* icon */}
                   <TabsContent value="addicon" className="flex flex-col justify-center px-3">
-                    <Icons/>
+                    <Icons />
                   </TabsContent>
 
                   {/* bg */}
@@ -148,13 +154,13 @@ export default function CreateVisitCard() {
                     <Label className="mt-2">select color</Label>
                     <Card className="my-2">
                       <CardContent className="flex flex-row flex-wrap justify-center gap-2 scroll-auto" >
-                        <BackgroundColors/>
+                        <BackgroundColors setCardBackground={setCardBackground} />
                       </CardContent>
                     </Card>
                     <Label className="mt-2">select imgages</Label>
-                    <Card className="my-2 h-85" style={{overflowY: "auto", scrollbarWidth: "thin"}}>
+                    <Card className="my-2 h-85" style={{ overflowY: "auto", scrollbarWidth: "thin" }}>
                       <CardContent className="flex flex-row flex-wrap justify-center gap-2 scroll-auto" >
-                        <BackgroundImages/>
+                        <BackgroundImages setCardBackground={setCardBackground} />
                       </CardContent>
                     </Card>
                   </TabsContent>
@@ -165,7 +171,7 @@ export default function CreateVisitCard() {
                     <Label className="mt-2">select img</Label>
                     <Card className="my-2">
                       <CardContent className="flex flex-row flex-wrap justify-center gap-2 scroll-auto" >
-                        <AddImages/>
+                        <AddImages />
                       </CardContent>
                     </Card>
                   </TabsContent>
@@ -176,47 +182,22 @@ export default function CreateVisitCard() {
           <ResizableHandle className="cursor-ew-resize bg-black" />
           {/* playground */}
           <ResizablePanel>
-            <Tabs defaultValue="card_front" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mx-auto">
-                <TabsTrigger value="card_front" className="w-full h-full p-2 flex-col data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md">Front</TabsTrigger>
-                <TabsTrigger value="card_back" className="w-full h-full p-2 flex-col data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md">Back</TabsTrigger>
-              </TabsList>
-              <TabsContent value="card_front" className="w-full h-full flex justify-center items-center py-10 bg-gray-300 dark:bg-gray-500">
-                <Card  className="bg-white rounded-lg p-2 border border-gray-300" style={{ width: "577.612px", height: "324.800px" }}>
-                  <FabricJSCanvas className="sample-canvas w-full h-full" onReady={onReady} />
-                  {elements.map((el) => (
-                    <Rnd
-                      key={el.id}
-                      default={{ x: el.x, y: el.y, width: "auto", height: "auto" }}
-                      bounds="parent"
-                      enableResizing={false}
-                    >
-                      {el.type === "text" && <span className="text-lg text-black font-bold">{el.content}</span>}
-                      {el.type === "image" && <img src={el.content} alt="Image" className="w-12 h-12" />}
-                      {el.type === "icon" && <span className="text-xl">{el.content}</span>}
-                    </Rnd>
-                  ))}
-                </Card>
-              </TabsContent>
-              <TabsContent value="card_back" className="w-full h-full flex justify-center items-center py-10 bg-gray-300 dark:bg-gray-500">
-                <Card className="bg-white rounded-lg p-2 border border-gray-300" style={{ width: "577.612px", height: "324.800px" }}>
-                  <FabricJSCanvas className="sample-canvas w-full h-full" onReady={onReady} />
-                  {elements.map((el) => (
-                    <Rnd
-                      key={el.id}
-                      default={{ x: el.x, y: el.y, width: "auto", height: "auto" }}
-                      bounds="parent"
-                      enableResizing={false}
-                    >
-                      {el.type === "text" && <span className="text-lg text-black font-bold">{el.content}</span>}
-                      {el.type === "image" && <img src={el.content} alt="Image" className="w-12 h-12" />}
-                      {el.type === "icon" && <span className="text-xl">{el.content}</span>}
-                    </Rnd>
-                  ))}
-                </Card>
-              </TabsContent>
-            </Tabs>
-
+            <div className="w-full h-full flex justify-center items-center py-10 bg-gray-300 dark:bg-gray-500">
+              <Card className="rounded-lg p-2 border border-gray-300" style={{ width: "577.612px", height: "324.800px", background: cardBackground.startsWith("url") ? `${cardBackground} center/cover no-repeat` : cardBackground }}>
+                <FabricJSCanvas className="sample-canvas w-full h-full" onReady={onReady} />
+                {elements.map((el) => (
+                  <Rnd
+                    key={el.id}
+                    default={{ x: el.x, y: el.y, width: "auto", height: "auto" }}
+                    bounds="parent"
+                    enableResizing={false}>
+                    {el.type === "text" && <span className="text-lg text-black font-bold">{el.content}</span>}
+                    {el.type === "image" && <img src={el.content} alt="Image" className="w-12 h-12" />}
+                    {el.type === "icon" && <span className="text-xl">{el.content}</span>}
+                  </Rnd>
+                ))}
+              </Card>
+            </div>
           </ResizablePanel>
           <ResizableHandle className="cursor-ew-resize bg-black" />
           {/* left panet shows all texts */}
@@ -229,7 +210,7 @@ export default function CreateVisitCard() {
                 <Button className="hover:cursor-pointer"><Trash2Icon className="text-red-800" /></Button>
               </div>
 
-              <DrawerContent className="w-full bg-gray-200 dark:bg-gray-600">
+              <DrawerContent className={`w-full ${theme=="dark"? "bg-gray-800":"bg-gray-200"}`}>
                 <DrawerHeader className="flex flex-col justify-center mx-auto ">
                   <DrawerTitle>Edit element parameters</DrawerTitle>
                   <DrawerDescription hidden={true}></DrawerDescription>

@@ -20,14 +20,17 @@ const bgs = [
   "linear-gradient(to right, #A8DADC, #457B9D)",
   "linear-gradient(to right, #2ECC71, #1D3557)",
   "linear-gradient(to right, #FFC107, #F4A261)",
-
 ]
 
-export function BackgroundColors() {
+interface Props {
+  setCardBackground: (url: string)=>void
+} 
+
+export function BackgroundColors({setCardBackground}: Props) {
   return (
     <>
       {bgs.map((bg, index) => (
-        <div key={index} className="w-9 h-9 hover:cursor-pointer" style={{ background: bg }}></div>
+        <div key={index} onClick={()=>setCardBackground(bg)} className="w-9 h-9 hover:cursor-pointer" style={{ background: bg }}></div>
       ))}
     </>
   )
@@ -35,7 +38,7 @@ export function BackgroundColors() {
 
 
 
-export function BackgroundImages() {
+export function BackgroundImages({setCardBackground}: Props) {
   return (
     <>
       <div className="grid grid-cols-2">
@@ -43,6 +46,7 @@ export function BackgroundImages() {
           <img
             key={index}
             src={`/images/img_for_cardBg/imgs${index+1}.jpg`}
+            onClick={()=>setCardBackground(`url(/images/img_for_cardBg/imgs${index+1}.jpg)`)}
             className="w-full h-18 object-cover rounded-lg shadow-md m-1 px-1"
           />
         ))}
