@@ -1,9 +1,10 @@
 import { Services } from "@/types/services";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
-const SingleFeature = ({ service }: { service: Services }) => {
-  const { icon, title, paragraph } = service;
+const SingleFeature = ({ service, setUrl }: { service: Services, setUrl: (url: string)=>void }) => {
+  const { icon, title, paragraph, link } = service;
   return (
     <div className="w-full">
       <div className="wow fadeInUp" data-wow-delay=".15s">
@@ -16,9 +17,13 @@ const SingleFeature = ({ service }: { service: Services }) => {
         <p className="pr-[10px] text-base font-medium leading-relaxed text-body-color">
           {paragraph}
         </p>
-        <DialogTrigger asChild>
-          <Button className="inline-block rounded-sm mt-4 h-12 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/90 dark:bg-blue-700/100 dark:hover:bg-blue-700/50">Go to use</Button>
-        </DialogTrigger>
+        <div className="flex gap-4">
+          <Link to={link} className="inline-block rounded-sm mt-4 p-3 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/90 dark:bg-blue-700/100 dark:hover:bg-blue-700/50">Go to use</Link>
+          <a href="/#templates" className="inline-block rounded-sm mt-4 p-3 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/90 border dark:hover:bg-blue-700/50">Select template</a>
+        </div>
+        {/* <DialogTrigger asChild>
+          <Button onClick={()=>setUrl(service.link)} className="inline-block rounded-sm mt-4 h-12 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/90 dark:bg-blue-700/100 dark:hover:bg-blue-700/50">Go to use</Button>
+        </DialogTrigger> */}
       </div>
     </div>
   );
