@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BreadcrumbMenu } from "@/components/Header/BreadcrumbMenu";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { DownloadIcon, MixIcon, TextIcon, TransparencyGridIcon, Pencil2Icon } from "@radix-ui/react-icons"
-import { BoldIcon, ImageIcon, ItalicIcon, Sun, Trash2Icon, UnderlineIcon } from "lucide-react";
-import {useTheme} from "@/components/theme-provider"
+import { BanIcon, ImageIcon, Redo, Trash, Trash2Icon, Undo } from "lucide-react";
+import { useTheme } from "@/components/theme-provider"
 import {
   ResizableHandle,
   ResizablePanel,
@@ -13,91 +13,170 @@ import {
 import { Input } from "@/components/ui/input";
 import {
   Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react";
-import { FabricImage, FabricText } from "fabric";
+import { FabricImage } from "fabric";
 import { Rnd } from "react-rnd";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label";
 
 import { BackgroundColors, BackgroundImages } from "./Backgrounds";
-import AddImages from "./AddImages";
-import Icons from "./Icons";
-import { useParams } from "react-router-dom";
+import { AddImages, AddShape, AddText } from "./AddImages";
+import { Icons, IconRenderer } from "./Icons";
+// import { useParams } from "react-router-dom";
+import { CardElementType } from "@/types/CardElement"
+import ElementSetting from "./ElementSetting";
+
 
 
 export default function CreateVisitCard() {
-  const { id } = useParams();
-  const {theme} = useTheme()
+  // const { id } = useParams();
+  const { theme } = useTheme()
   const [isMobile, setIsMobile] = useState(false);
-  const [selectedFont, setSelectedFont] = useState("Roboto");
-  // const fonts = [
-  //   "Roboto",
-  //   "Open Sans",
-  //   "Montserrat",
-  //   "Lato",
-  //   "Poppins",
-  //   "Playfair Display",
-  //   "Raleway",
-  // ];
-
-  const [elements, setElements] = useState([
-    { id: 1, type: "text", content: "John Doe", x: 20, y: 30 },
-    { id: 2, type: "image", content: "/images/img_for_cardImg/img1.png", x: 100, y: 50 },
-    { id: 3, type: "icon", content: "☎", x: 50, y: 100 }
-  ]);
+  const [elements, setElements] = useState<CardElementType[]>([]);
   const [cardBackground, setCardBackground] = useState("#fff")
-
-  const addElement = (type) => {
+  const addElementHandler = (type: "text" | "image" | "icon", value: string) => {
     setElements([
       ...elements,
       {
-        id: elements.length + 1,
+        id: crypto.randomUUID(),
         type,
-        content: type === "text" ? "New Text" : type === "image" ? "/images/img_for_cardImg/img1.png" : "★",
+        content: type === "text" ? (value as string) : type === "image" ? "/images/img_for_cardImg/img1.png" : value,
         x: 50,
-        y: 50
+        y: 50,
+        color: "#000000",
+        fontSize: type == "text" ? 16 : 20,
+        fontFamily: "Arial",
+        fontWeight: "normal",
+        fontStyle: "normal",
+        textDecoration: "none",
+        resizble: type === "image" ? true : false
       }
     ]);
   };
 
-  const { editor, onReady } = useFabricJSEditor();
-  const onAddCircle = async () => {
-    // editor.addCircle();
-    const textF = await FabricText.fromObject({
-      left: 100,
-      top: 100,
-      fill: "#000",
-      fontFamily: selectedFont,
-      fontSize: 16,
-    })
-    editor?.addText(textF);
-  };
-  const onAddRectangle = () => {
-    editor.addRectangle();
+  //selected element for edit
+  const [selectedElement, setSelectedElement] = useState<CardElementType>({ id: "", type: "text", content: "", x: 0, y: 0 });
+
+  const selectelementHandler = (el: CardElementType) => {
+    setSelectedElement({ ...el });
+  }
+
+  const history = useRef<string[]>([]);
+  const historyIndex = useRef(-1);
+
+  const saveHistory = (newState: CardElementType[]) => {
+    if (historyIndex.current < history.current.length - 1) {
+      history.current = history.current.slice(0, historyIndex.current + 1);
+    }
+    history.current.push(JSON.stringify(newState));
+    historyIndex.current++;
   };
 
-  const onAddImage = async () => {
-    const image = await FabricImage.fromURL(
-      "https://www.searchenginejournal.com/wp-content/uploads/2019/07/the-essential-guide-to-using-images-legally-online.png"
+  // **Ortga qaytarish (Ctrl + Z)**
+  const undo = () => {
+    if (historyIndex.current > 0) {
+      historyIndex.current--;
+      setElements(JSON.parse(history.current[historyIndex.current]));
+    }
+  };
+
+  // **Oldinga qaytarish (Ctrl + Y)**
+  const redo = () => {
+    if (historyIndex.current < history.current.length - 1) {
+      historyIndex.current++;
+      setElements(JSON.parse(history.current[historyIndex.current]));
+    }
+  };
+
+  const updateElement = (id: string, newProps: { x: number; y: number; }) => {
+    const updatedElements = elements.map((el) =>
+      el.id === id ? { ...el, ...newProps } : el
     );
-    editor.canvas.add(image);
+    setElements(updatedElements);
+    saveHistory(updatedElements);
   };
 
-  
+  const { editor, onReady } = useFabricJSEditor();
+
+  const AddShapeHandler = (text: "rectangle" | "circle" | "line") => {
+    switch (text) {
+      case "rectangle":
+        editor?.addRectangle();
+        break;
+      case "circle":
+        editor?.addCircle();
+        break;
+      case "line":
+        editor?.addLine();
+        break;
+    }
+  };
+
+  const onRemoveShape = (type: "selected" | "all") => {
+    const resultOfConfirm = window.confirm("Are you sure you want to delete?");
+    if (!resultOfConfirm) return;
+    if (type === "selected") {
+      editor?.deleteSelected();
+    } else {
+      editor?.deleteAll();
+    }
+  }
+
+  const onAddImage = async (imgUrl: string) => {
+    const image = await FabricImage.fromURL(imgUrl);
+    image.scaleToWidth(100);
+    image.scaleToHeight(100);
+    editor?.canvas.add(image);
+  };
+
+  const clearCanvas = () => {
+    const resultOfConfirm = window.confirm("Are you sure you want to delete?");
+    if (!resultOfConfirm) return;
+    editor?.canvas.clear();
+    editor?.deleteAll();
+    setElements([]);
+  }
+
+  const [openEditElem, setOpenEditElem] = useState(false)
+
+  const onRemoveElement = (id: string) => {
+    const resultOfConfirm = window.confirm("Are you sure you want to delete?");
+    if (!resultOfConfirm) return;
+    const updatedElements = elements.filter((el) => el.id !== id);
+    setElements(updatedElements);
+    saveHistory(updatedElements);
+  }
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 768);
   }, []);
+
+  //keydown handler
+  useEffect(() => {
+    const handleKeyDown = (e: { ctrlKey: unknown; key: string; preventDefault: () => void; }) => {
+      // Ctrl + Y
+      if (e.ctrlKey && e.key === 'y') {
+        e.preventDefault();
+        redo();
+      }//Ctrl + Z
+      if (e.ctrlKey && e.key === 'z') {
+        e.preventDefault();
+        undo();
+      }
+      if (e.key === 'Delete') {
+        e.preventDefault();
+        const resultOfConfirm = window.confirm("Are you sure you want to delete?");
+        if (!resultOfConfirm) return;
+        editor?.deleteSelected();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [editor]);
 
   if (isMobile) {
     return <div style={{ padding: '20px', textAlign: 'center' }}>⚠️ Please use this app on a desktop device.</div>;
@@ -136,16 +215,12 @@ export default function CreateVisitCard() {
                   {/* text */}
                   <TabsContent value="addtext" className="flex flex-col justify-center px-3">
                     <h4 className="text-2xl text-center">Add new text</h4>
-                    <Label>Text</Label>
-                    <Input type="text" placeholder="type here" className="my-2" />
-                    <Label>Color</Label>
-                    <Input type="color" />
-                    <Button className="my-2 bg-blue-500">Add</Button>
+                    <AddText addElementHandler={addElementHandler} />
                   </TabsContent>
 
                   {/* icon */}
                   <TabsContent value="addicon" className="flex flex-col justify-center px-3">
-                    <Icons />
+                    <Icons addElementHandler={addElementHandler} />
                   </TabsContent>
 
                   {/* bg */}
@@ -171,7 +246,13 @@ export default function CreateVisitCard() {
                     <Label className="mt-2">select img</Label>
                     <Card className="my-2">
                       <CardContent className="flex flex-row flex-wrap justify-center gap-2 scroll-auto" >
-                        <AddImages />
+                        <AddImages onAddImage={onAddImage} />
+                      </CardContent>
+                    </Card>
+                    <Label className="mt-2">select shape</Label>
+                    <Card className="my-2">
+                      <CardContent className="flex flex-row flex-wrap justify-center gap-2 scroll-auto" >
+                        <AddShape AddShapeHandler={AddShapeHandler} />
                       </CardContent>
                     </Card>
                   </TabsContent>
@@ -188,12 +269,13 @@ export default function CreateVisitCard() {
                 {elements.map((el) => (
                   <Rnd
                     key={el.id}
+                    onDragStop={(_, d) => updateElement(el.id, { x: d.x, y: d.y })}
                     default={{ x: el.x, y: el.y, width: "auto", height: "auto" }}
                     bounds="parent"
-                    enableResizing={false}>
-                    {el.type === "text" && <span className="text-lg text-black font-bold">{el.content}</span>}
+                    enableResizing={el.resizble}>
+                    {el.type === "text" && <span style={{ color: el.color, fontSize: el.fontSize, fontFamily: el.fontFamily, fontWeight: el.fontWeight, fontStyle: el.fontStyle, textDecoration: el.textDecoration }}>{el.content}</span>}
                     {el.type === "image" && <img src={el.content} alt="Image" className="w-12 h-12" />}
-                    {el.type === "icon" && <span className="text-xl">{el.content}</span>}
+                    {el.type === "icon" && <IconRenderer iconName={el.content} color={el.color} size={el.fontSize} className="" />}
                   </Rnd>
                 ))}
               </Card>
@@ -202,57 +284,46 @@ export default function CreateVisitCard() {
           <ResizableHandle className="cursor-ew-resize bg-black" />
           {/* left panet shows all texts */}
           <ResizablePanel minSize={20} maxSize={22} defaultSize={22} className="flex-col" >
-            <Drawer>
-              <div className="flex p-2 items-center justify-center">
-                <Label>T1</Label>
-                <Input type="text" className="mx-2" />
-                <DrawerTrigger className="hover:cursor-pointer"><Pencil2Icon className="text-sky-500" /></DrawerTrigger>
-                <Button className="hover:cursor-pointer"><Trash2Icon className="text-red-800" /></Button>
-              </div>
-
-              <DrawerContent className={`w-full ${theme=="dark"? "bg-gray-800":"bg-gray-200"}`}>
-                <DrawerHeader className="flex flex-col justify-center mx-auto ">
-                  <DrawerTitle>Edit element parameters</DrawerTitle>
-                  <DrawerDescription hidden={true}></DrawerDescription>
-                </DrawerHeader>
-                <DrawerFooter className="w-1/3 mx-auto">
-                  <div className="flex justify-between items-center">
-                    <Label>Font</Label>
-                    <Input type="text" className="w-2/3" />
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <Label>Font size</Label>
-                    <Input type="number" className="w-2/3" />
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <Label>Color</Label>
-                    <Input type="color" className="w-2/3" />
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <Label>Style</Label>
-                    <div className="flex gap-4">
-                      <div className="flex">
-                        <Checkbox id="bold" className="rounded-full" />
-                        <BoldIcon className="text-lg" />
-                        <Label htmlFor="bold" className="sr-only">Bold</Label>
-                      </div>
-                      <div className="flex">
-                        <Checkbox id="italic" className="rounded-full" />
-                        <ItalicIcon className="text-lg" />
-                        <Label htmlFor="italic" className="sr-only">Italic</Label>
-                      </div>
-                      <div className="flex">
-                        <Checkbox id="underline" className="rounded-full" />
-                        <UnderlineIcon className="text-lg" />
-                        <Label htmlFor="underline" className="sr-only">Underline</Label>
-                      </div>
+            <Drawer open={openEditElem} onOpenChange={setOpenEditElem}>
+              <div className="flex-col h-100">
+                <h4 className="text-2xl text-center">Control</h4>
+                <div className="flex-col border-b">
+                  <div className="flex justify-between">
+                    <div className="flex">
+                      <Button onClick={undo} title="Undo (Ctrl + Z)" className="p-1 m-1 bg-blue-400"><Undo /></Button>
+                      <Button onClick={redo} title="Redo (Ctrl + Y)" className="p-1 m-1 bg-blue-400"><Redo /></Button>
+                    </div>
+                    <div className="flex">
+                      <Button className="my-2 mx-1 bg-red-500" onClick={() => onRemoveShape("selected")} title="Remove selected shape or image"><BanIcon /></Button>
+                      <Button className="my-2 mx-1 bg-red-500" onClick={() => onRemoveShape("all")} title="Remove all shape and image"><Trash /></Button>
+                      <Button onClick={clearCanvas} className="my-2 bg-red-500" title="Clear All elements"><Trash2Icon /></Button>
                     </div>
                   </div>
+                </div>
+                <div className="flex-col p-2 justify-center">
+                  {
+                    elements.map((el, index) => (
+                      <div className="flex w-full my-2" key={index}>
+                        <Label>
+                          {
+                            el.type == "text" ? "Text" : "Icon"
+                          }
+                        </Label>
+                        {
+                          el.type === "text" ?
+                            <Input type="text" className="mx-2" disabled value={el.content} /> :
+                            <IconRenderer iconName={el.content} color={theme == "dark" ? "#fff" : "#000"} size={30} className={"mt-3 mx-2"} />
+                        }
+                        <DrawerTrigger className="hover:cursor-pointer"><Pencil2Icon className="text-sky-500" onClick={() => selectelementHandler(el)} /></DrawerTrigger>
+                        <Button className="hover:cursor-pointer" onClick={() => onRemoveElement(el.id)}><Trash2Icon className="text-red-800" /></Button>
+                      </div>
+                    ))
+                  }
+                </div>
 
-                  <DrawerClose className="hover:cursor-pointer rounded mx-auto px-4 py-2 bg-green-700">Done</DrawerClose>
-                </DrawerFooter>
-              </DrawerContent>
+              </div>
+              {/* Drawer window for open element settings */}
+              <ElementSetting selectedElement={selectedElement} setSelectedElement={setSelectedElement} setElements={setElements} elements={elements} openEditElem={openEditElem} />
             </Drawer>
           </ResizablePanel>
         </ResizablePanelGroup>

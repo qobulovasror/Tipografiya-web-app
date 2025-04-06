@@ -675,7 +675,7 @@ const icons = [
 
 const iconsStyle = "w-7 h-7 cursor-pointer hover:bg-blue-600 rounded text-3xl";
 
-export default function Icons() {
+export function Icons({addElementHandler}: {addElementHandler: (text: "text" | "image" | "icon", value: string) => void }) {
   const [input, setInput] = useState("");
   
   return (
@@ -686,12 +686,21 @@ export default function Icons() {
       <Card className="my-2 h-96">
         <CardContent className="flex flex-row flex-wrap gap-2" style={{overflowY: "scroll", scrollbarWidth: "thin"}}>
           {icons.filter(i => i.name.toLocaleLowerCase().indexOf(input.toLocaleLowerCase())>-1).map(({name, component: Icon}, index) => (
-            <div title={name}>
-              <Icon key={index} className={iconsStyle} />
+            <div key={index} title={name} onClick={() => addElementHandler("icon", name)}>
+              <Icon className={iconsStyle} />
             </div>
           ))}
         </CardContent>
       </Card>
     </>
   );
+}
+
+
+export function IconRenderer({ iconName, color, size, className }: { iconName: string, color: string | undefined, size: number | undefined, className: string | "" }) {
+  const IconComponent = icons.filter(i => i.name === iconName)[0]?.component;
+
+  if (!IconComponent) return <span></span>;
+
+  return <IconComponent color={color? color : "#000"} size={size? size: "1em"} className={className} />;
 }

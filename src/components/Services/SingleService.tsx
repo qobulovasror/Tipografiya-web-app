@@ -1,9 +1,7 @@
 import { Services } from "@/types/services";
-import { DialogTrigger } from "@radix-ui/react-dialog";
-import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 
-const SingleFeature = ({ service, setUrl }: { service: Services, setUrl: (url: string)=>void }) => {
+const SingleFeature = ({ service }: { service: Services }) => {
   const { icon, title, paragraph, link } = service;
   return (
     <div className="w-full">
@@ -21,9 +19,6 @@ const SingleFeature = ({ service, setUrl }: { service: Services, setUrl: (url: s
           <Link to={link} className="inline-block rounded-sm mt-4 p-3 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/90 dark:bg-blue-700/100 dark:hover:bg-blue-700/50">Go to use</Link>
           <a href="/#templates" className="inline-block rounded-sm mt-4 p-3 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/90 border dark:hover:bg-blue-700/50">Select template</a>
         </div>
-        {/* <DialogTrigger asChild>
-          <Button onClick={()=>setUrl(service.link)} className="inline-block rounded-sm mt-4 h-12 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/90 dark:bg-blue-700/100 dark:hover:bg-blue-700/50">Go to use</Button>
-        </DialogTrigger> */}
       </div>
     </div>
   );

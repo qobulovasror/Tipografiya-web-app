@@ -1,10 +1,11 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Template } from "@/types/template";
+import { Link } from "react-router-dom";
 
 const SingleTemplate = ({ template }: { template: Template }) => {
-  const { title, img, about, category, link } = template;
+  const { title, img, category, link } = template;
   return (
     <>
       <Card className="group relative overflow-hidden rounded-lg shadow-lg transition duration-300 hover:shadow-2xl dark:hover:shadow-gray-800 py-0">
@@ -19,15 +20,8 @@ const SingleTemplate = ({ template }: { template: Template }) => {
           <Badge className="absolute right-4 top-4 z-20 px-4 py-2 text-sm font-semibold bg-blue-500 capitalize shadow-md">
             {category}
           </Badge>
+          <Link to={link} className="absolute bottom-1 right-1 z-10 bg-blue-500 px-3 py-2 rounded">Go to edit</Link>
         </a>
-        <CardContent className="p-6 md:p-8">
-          <h3 className="text-xl font-bold sm:text-2xl">
-            <a href={link} className="dark:text-body-color-dark hover:underline text-body-color">
-              {title}
-            </a>
-          </h3>
-          <p className="mt-4 text-sm text-gray-800 dark:text-gray-400">{about}</p>
-        </CardContent>
       </Card>
     </>
   );
