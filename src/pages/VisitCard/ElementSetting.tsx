@@ -220,7 +220,6 @@ export default function ElementSetting(props: ElementSettingProps) {
             </div>
           </>
         }
-
         <DrawerClose asChild>
           <Button onClick={editElementDone} className="w-1/2 hover:cursor-pointer rounded mx-auto px-4 py-2 bg-green-700" variant={"outline"}>Save</Button>
         </DrawerClose>

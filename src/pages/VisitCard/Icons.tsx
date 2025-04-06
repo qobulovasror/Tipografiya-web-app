@@ -699,8 +699,6 @@ export function Icons({addElementHandler}: {addElementHandler: (text: "text" | "
 
 export function IconRenderer({ iconName, color, size, className }: { iconName: string, color: string | undefined, size: number | undefined, className: string | "" }) {
   const IconComponent = icons.filter(i => i.name === iconName)[0]?.component;
-
   if (!IconComponent) return <span></span>;
-
-  return <IconComponent color={color? color : "#000"} size={size? size: "1em"} className={className} />;
+  return <IconComponent color={color? color : "#000"} className={className + ` w-${size} h-${size}`} />;
 }

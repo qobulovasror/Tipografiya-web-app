@@ -29,6 +29,9 @@ import { Icons, IconRenderer } from "./Icons";
 import { CardElementType } from "@/types/CardElement"
 import ElementSetting from "./ElementSetting";
 
+import jsPDF from "jspdf";
+import domtoimage from 'dom-to-image-more';
+import FileSaver from 'file-saver';
 
 
 export default function CreateVisitCard() {
@@ -47,7 +50,7 @@ export default function CreateVisitCard() {
         x: 50,
         y: 50,
         color: "#000000",
-        fontSize: type == "text" ? 16 : 20,
+        fontSize: type == "text" ? 16 : 7,
         fontFamily: "Arial",
         fontWeight: "normal",
         fontStyle: "normal",
@@ -59,7 +62,6 @@ export default function CreateVisitCard() {
 
   //selected element for edit
   const [selectedElement, setSelectedElement] = useState<CardElementType>({ id: "", type: "text", content: "", x: 0, y: 0 });
-
 
   const updateElement = (id: string, newProps: { x: number; y: number; }) => {
     const updatedElements = elements.map((el) =>
@@ -103,13 +105,29 @@ export default function CreateVisitCard() {
   const editElementDone = () => {
     const updatedElements = elements.map((el) => {
       if (el.id === selectedElement.id) {
-        return {...selectedElement}
+        return { ...selectedElement }
       } else {
-        return {...el}
+        return { ...el }
       }
     })
     setElements(updatedElements);
 
+  };
+
+  const downloadCardAsImage = async () => {
+    editor?.canvas.renderAll();
+    domtoimage.toBlob(document.getElementById('visit-card-preview')).then(function (blob: string | Blob) {
+      FileSaver.saveAs(blob, "my-visit-card.png");
+    });
+  };
+
+  const downloadCardAsPDF = async () => {
+    editor?.canvas.renderAll();
+
+    domtoimage.toCanvas(document.getElementById('visit-card-preview')).then(function (canvas) {
+      const pdf = new jsPDF("landscape", "px", [canvas.width, canvas.height]);
+      pdf.save("visit-card.pdf");
+    });
   };
 
   const { editor, onReady } = useFabricJSEditor();
@@ -269,6 +287,13 @@ export default function CreateVisitCard() {
                       </CardContent>
                     </Card>
                   </TabsContent>
+
+                  {/* addimg */}
+                  <TabsContent value="export" className="flex flex-col justify-center px-3">
+                    <h4 className="text-2xl text-center">Download visit card</h4>
+                    <Button onClick={downloadCardAsImage} className="p-3 m-2 bg-blue-500 rounded flex"><DownloadIcon />Download card as a image</Button>
+                    <Button onClick={downloadCardAsPDF} className="p-3 m-2 bg-blue-500 rounded flex"><DownloadIcon />Download card as a PDF</Button>
+                  </TabsContent>
                 </div>
               </div>
             </Tabs>
@@ -277,7 +302,7 @@ export default function CreateVisitCard() {
           {/* playground */}
           <ResizablePanel>
             <div className="w-full h-full flex justify-center items-center py-10 bg-gray-300 dark:bg-gray-500">
-              <Card className="rounded-lg p-2 border border-gray-300" style={{ width: "577.612px", height: "324.800px", background: cardBackground.startsWith("url") ? `${cardBackground} center/cover no-repeat` : cardBackground }}>
+              <Card id="visit-card-preview" className="rounded-lg p-2 border border-gray-300" style={{ width: "577.612px", height: "324.800px", background: cardBackground.startsWith("url") ? `${cardBackground} center/cover no-repeat` : cardBackground }}>
                 <FabricJSCanvas className="sample-canvas w-full h-full" onReady={onReady} />
                 {elements.map((el) => (
                   <Rnd
@@ -325,7 +350,9 @@ export default function CreateVisitCard() {
                         {
                           el.type === "text" ?
                             <Input type="text" className="mx-2" disabled value={el.content} /> :
-                            <IconRenderer iconName={el.content} color={theme == "dark" ? "#fff" : "#000"} size={30} className={"mt-3 mx-2"} />
+                            <div className="my-2 mx-4">
+                              <IconRenderer iconName={el.content} color={theme == "dark" ? "#fff" : "#000"} size={5} className={""} />
+                            </div>
                         }
                         <DrawerTrigger className="hover:cursor-pointer"><Pencil2Icon className="text-sky-500" onClick={() => selectelementHandler(el)} /></DrawerTrigger>
                         <Button className="hover:cursor-pointer" onClick={() => onRemoveElement(el.id)}><Trash2Icon className="text-red-800" /></Button>
