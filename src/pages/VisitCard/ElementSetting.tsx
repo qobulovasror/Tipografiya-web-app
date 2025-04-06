@@ -70,16 +70,14 @@ const fonts = [
 interface ElementSettingProps {
   selectedElement: CardElementType;
   setSelectedElement: (el: CardElementType) => void;
-  setElements: (els: CardElementType[]) => void;
-  elements: CardElementType[];
   openEditElem: boolean;
+  editElementDone: () => void
 }
 
 export default function ElementSetting(props: ElementSettingProps) {
-  const { selectedElement, setSelectedElement, setElements, elements, openEditElem } = props;
+  const { selectedElement, setSelectedElement, openEditElem, editElementDone } = props;
   const [openSelectFont, setOpenSelectFont] = useState(false)
   const { theme } = useTheme();
-
 
   const selectFontHandler = (font: string) => {
     setSelectedElement({
@@ -87,19 +85,6 @@ export default function ElementSetting(props: ElementSettingProps) {
       fontFamily: font
     })
     setOpenSelectFont(false)
-  }
-
-  const doneHandler = () => {
-    const updatedElements = elements.filter((el) => {
-      if (el.id === selectedElement.id) {
-        return { ...selectedElement }
-      } else {
-        return el
-      }
-    })
-    setElements(updatedElements);
-    console.log(updatedElements);
-    
   }
 
   const firstFocusableRef = useRef(null);
@@ -125,52 +110,56 @@ export default function ElementSetting(props: ElementSettingProps) {
               <Input type="text" value={selectedElement?.content} onChange={v => setSelectedElement({ ...selectedElement, content: v.target.value })} className="w-2/3" />
           }
         </div>
-        <div className="flex justify-between items-center">
-          <Label>Font</Label>
-          <Popover open={openSelectFont} onOpenChange={setOpenSelectFont}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={openSelectFont}
-                className="w-2/3 justify-between"
-              >
-                {selectedElement?.fontFamily
-                  ? fonts.find((font) => font.value === selectedElement?.fontFamily)?.label
-                  : "Select font..."}
-                <ChevronsUpDown className="opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className={`w-[200px] p-0 ${theme == "dark" ? "bg-gray-700" : "bg-gray-100"}`}>
-              <Command>
-                <CommandInput placeholder="Search font..." className="h-9" />
-                <CommandList>
-                  <CommandEmpty>No font found.</CommandEmpty>
-                  <CommandGroup>
-                    {fonts.map((font) => (
-                      <CommandItem
-                        key={font.value}
-                        value={font.value}
-                        onSelect={selectFontHandler}
-                      >
-                        <span style={{ fontFamily: font.value }}>
-                          {font.label}
-                        </span>
-                        <Check
-                          className={cn(
-                            "ml-auto",
-                            selectedElement?.fontFamily === font.value ? "opacity-100" : "opacity-0"
-                          )}
-                        />
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
+        {
+          selectedElement?.type === "text" &&
+          <div className="flex justify-between items-center">
+            <Label>Font</Label>
+            <Popover open={openSelectFont} onOpenChange={setOpenSelectFont}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={openSelectFont}
+                  className="w-2/3 justify-between"
+                >
+                  {selectedElement?.fontFamily
+                    ? fonts.find((font) => font.value === selectedElement?.fontFamily)?.label
+                    : "Select font..."}
+                  <ChevronsUpDown className="opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className={`w-[200px] p-0 ${theme == "dark" ? "bg-gray-700" : "bg-gray-100"}`}>
+                <Command>
+                  <CommandInput placeholder="Search font..." className="h-9" />
+                  <CommandList>
+                    <CommandEmpty>No font found.</CommandEmpty>
+                    <CommandGroup>
+                      {fonts.map((font) => (
+                        <CommandItem
+                          key={font.value}
+                          value={font.value}
+                          onSelect={selectFontHandler}
+                        >
+                          <span style={{ fontFamily: font.value }}>
+                            {font.label}
+                          </span>
+                          <Check
+                            className={cn(
+                              "ml-auto",
+                              selectedElement?.fontFamily === font.value ? "opacity-100" : "opacity-0"
+                            )}
+                          />
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
 
-        </div>
+          </div>
+        }
+
         <div className="flex justify-between items-center">
           <Label>Font size</Label>
           <Input ref={firstFocusableRef} type="number" className="w-2/3" value={selectedElement?.fontSize} onChange={v => setSelectedElement({ ...selectedElement, fontSize: Number(v.target.value) })} />
@@ -180,55 +169,60 @@ export default function ElementSetting(props: ElementSettingProps) {
           <Input type="color" className="w-2/3" value={selectedElement?.color} onChange={v => setSelectedElement({ ...selectedElement, color: v.target.value })} />
         </div>
 
-        <div className="flex justify-between items-center">
-          <Label>Style</Label>
-          <Select>
-            <SelectTrigger className="w-2/3">
-              <SelectValue placeholder="Select a font style" />
-            </SelectTrigger>
-            <SelectContent className={`w-2/3 ${theme == "dark" ? "bg-gray-700" : "bg-gray-100"}`}>
-              <SelectGroup defaultValue={selectedElement?.fontStyle}>
-                <SelectItem value="normal" style={{ fontStyle: "normal" }}>Normal</SelectItem>
-                <SelectItem value="italic" style={{ fontStyle: "italic" }}>Italic</SelectItem>
-                <SelectItem value="oblique" style={{ fontStyle: "oblique" }}>Oblique</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
+        {
+          selectedElement.type === "text" &&
+          <>
+            <div className="flex justify-between items-center">
+              <Label>Style</Label>
+              <Select>
+                <SelectTrigger className="w-2/3">
+                  <SelectValue placeholder="Select a font style" />
+                </SelectTrigger>
+                <SelectContent className={`w-2/3 ${theme == "dark" ? "bg-gray-700" : "bg-gray-100"}`}>
+                  <SelectGroup defaultValue={selectedElement?.fontStyle}>
+                    <SelectItem value="normal" style={{ fontStyle: "normal" }}>Normal</SelectItem>
+                    <SelectItem value="italic" style={{ fontStyle: "italic" }}>Italic</SelectItem>
+                    <SelectItem value="oblique" style={{ fontStyle: "oblique" }}>Oblique</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex justify-between items-center">
+              <Label>Font Weight</Label>
+              <Select>
+                <SelectTrigger className="w-2/3">
+                  <SelectValue placeholder="Select a font weight" />
+                </SelectTrigger>
+                <SelectContent className={`${theme == "dark" ? "bg-gray-700" : "bg-gray-100"}`}>
+                  <SelectGroup defaultValue={selectedElement?.fontWeight}>
+                    <SelectItem value="normal" style={{ fontWeight: "normal" }}>Normal</SelectItem>
+                    <SelectItem value="bold" style={{ fontWeight: "bold" }}>bold</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
 
-        <div className="flex justify-between items-center">
-          <Label>Font Weight</Label>
-          <Select>
-            <SelectTrigger className="w-2/3">
-              <SelectValue placeholder="Select a font weight" />
-            </SelectTrigger>
-            <SelectContent className={`${theme == "dark" ? "bg-gray-700" : "bg-gray-100"}`}>
-              <SelectGroup defaultValue={selectedElement?.fontWeight}>
-                <SelectItem value="normal" style={{ fontWeight: "normal" }}>Normal</SelectItem>
-                <SelectItem value="bold" style={{ fontWeight: "bold" }}>bold</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
+            <div className="flex justify-between items-center">
+              <Label>Text decoration</Label>
+              <Select>
+                <SelectTrigger className="w-2/3">
+                  <SelectValue placeholder="Select a font weight" />
+                </SelectTrigger>
+                <SelectContent className={`${theme == "dark" ? "bg-gray-700" : "bg-gray-100"}`}>
+                  <SelectGroup defaultValue={selectedElement?.textDecoration}>
+                    <SelectItem value="normal" style={{ textDecoration: "normal" }}>none</SelectItem>
+                    <SelectItem value="underline" style={{ textDecoration: "underline" }}>underline</SelectItem>
+                    <SelectItem value="overline" style={{ textDecoration: "overline" }}>overline</SelectItem>
+                    <SelectItem value="line-through" style={{ textDecoration: "line-through" }}>line-through</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          </>
+        }
 
-        <div className="flex justify-between items-center">
-          <Label>Text decoration</Label>
-          <Select>
-            <SelectTrigger className="w-2/3">
-              <SelectValue placeholder="Select a font weight" />
-            </SelectTrigger>
-            <SelectContent className={`${theme == "dark" ? "bg-gray-700" : "bg-gray-100"}`}>
-              <SelectGroup defaultValue={selectedElement?.textDecoration}>
-                <SelectItem value="normal" style={{ textDecoration: "normal" }}>none</SelectItem>
-                <SelectItem value="underline" style={{ textDecoration: "underline" }}>underline</SelectItem>
-                <SelectItem value="overline" style={{ textDecoration: "overline" }}>overline</SelectItem>
-                <SelectItem value="line-through" style={{ textDecoration: "line-through" }}>line-through</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
         <DrawerClose asChild>
-          <Button onClick={()=>doneHandler()} className="w-1/2 hover:cursor-pointer rounded mx-auto px-4 py-2 bg-green-700" variant={"outline"}>Save</Button>
+          <Button onClick={editElementDone} className="w-1/2 hover:cursor-pointer rounded mx-auto px-4 py-2 bg-green-700" variant={"outline"}>Save</Button>
         </DrawerClose>
       </DrawerFooter>
     </DrawerContent>

@@ -60,6 +60,15 @@ export default function CreateVisitCard() {
   //selected element for edit
   const [selectedElement, setSelectedElement] = useState<CardElementType>({ id: "", type: "text", content: "", x: 0, y: 0 });
 
+
+  const updateElement = (id: string, newProps: { x: number; y: number; }) => {
+    const updatedElements = elements.map((el) =>
+      el.id === id ? { ...el, ...newProps } : el
+    );
+    setElements(updatedElements);
+    saveHistory(updatedElements);
+  };
+
   const selectelementHandler = (el: CardElementType) => {
     setSelectedElement({ ...el });
   }
@@ -91,12 +100,16 @@ export default function CreateVisitCard() {
     }
   };
 
-  const updateElement = (id: string, newProps: { x: number; y: number; }) => {
-    const updatedElements = elements.map((el) =>
-      el.id === id ? { ...el, ...newProps } : el
-    );
+  const editElementDone = () => {
+    const updatedElements = elements.map((el) => {
+      if (el.id === selectedElement.id) {
+        return {...selectedElement}
+      } else {
+        return {...el}
+      }
+    })
     setElements(updatedElements);
-    saveHistory(updatedElements);
+
   };
 
   const { editor, onReady } = useFabricJSEditor();
@@ -200,7 +213,7 @@ export default function CreateVisitCard() {
       {/* main workspace */}
       <div className="w-full flex" style={{ height: "calc(100vh - 60px)" }}>
         <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel minSize={27} maxSize={27} defaultSize={27}>
+          <ResizablePanel minSize={25} maxSize={25} defaultSize={25}>
             {/* menu */}
             <Tabs defaultValue="addtext" className="w-full">
               <div className="flex">
@@ -283,7 +296,7 @@ export default function CreateVisitCard() {
           </ResizablePanel>
           <ResizableHandle className="cursor-ew-resize bg-black" />
           {/* left panet shows all texts */}
-          <ResizablePanel minSize={20} maxSize={22} defaultSize={22} className="flex-col" >
+          <ResizablePanel minSize={17} maxSize={17} defaultSize={17} className="flex-col" >
             <Drawer open={openEditElem} onOpenChange={setOpenEditElem}>
               <div className="flex-col h-100">
                 <h4 className="text-2xl text-center">Control</h4>
@@ -323,7 +336,7 @@ export default function CreateVisitCard() {
 
               </div>
               {/* Drawer window for open element settings */}
-              <ElementSetting selectedElement={selectedElement} setSelectedElement={setSelectedElement} setElements={setElements} elements={elements} openEditElem={openEditElem} />
+              <ElementSetting editElementDone={editElementDone} selectedElement={selectedElement} setSelectedElement={setSelectedElement} openEditElem={openEditElem} />
             </Drawer>
           </ResizablePanel>
         </ResizablePanelGroup>
