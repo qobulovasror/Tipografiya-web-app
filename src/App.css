@@ -9,7 +9,7 @@ html.light {
 }
 
 html.dark {
-  background-color: #1E232EFF;
+  background-color: #1e232eff;
   color: white;
 }
 
@@ -17,3 +17,14 @@ html.dark {
   margin: 0 auto;
 }
 
+#visit-card-preview * {
+  border: none !important;
+  outline: none !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+
+
+span, p, div {
+  text-decoration: none !important;
+}

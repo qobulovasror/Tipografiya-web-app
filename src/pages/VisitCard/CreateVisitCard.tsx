@@ -119,6 +119,7 @@ export default function CreateVisitCard() {
     domtoimage.toBlob(document.getElementById('visit-card-preview')).then(function (blob: string | Blob) {
       FileSaver.saveAs(blob, "my-visit-card.png");
     });
+    console.log(elements);
   };
 
   const downloadCardAsPDF = async () => {
@@ -213,6 +214,72 @@ export default function CreateVisitCard() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [editor]);
 
+
+  useEffect(() => {
+    setElements(
+      [
+        {
+          "type": "text",
+          "id": "company-name",
+          "content": "Minimalist Co.",
+          "fontFamily": "Helvetica",
+          "fontSize": 28,
+          "fontWeight": "bold",
+          "fontStyle": "normal",
+          "textDecoration": "none",
+          "color": "#1a1a1a",
+          "x": 40,
+          "y": 40,
+          "resizble": false
+        },
+        {
+          "type": "text",
+          "id": "tagline",
+          "content": "Creative Solutions",
+          "fontFamily": "Helvetica",
+          "fontSize": 16,
+          "fontWeight": "normal",
+          "fontStyle": "italic",
+          "textDecoration": "none",
+          "color": "#4a4a4a",
+          "x": 42,
+          "y": 80,
+          "resizble": false
+        },
+        {
+          "type": "icon",
+          "id": "phone-icon",
+          "content": "Phone",
+          "fontSize": 10,
+          "fontFamily": "Arial",
+          "fontWeight": "normal",
+          "fontStyle": "normal",
+          "textDecoration": "none",
+          "color": "#000000",
+          "x": 40,
+          "y": 130,
+          "resizble": false
+        },
+        {
+          "type": "text",
+          "id": "phone-text",
+          "content": "+123 456 7890",
+          "fontFamily": "Arial",
+          "fontSize": 14,
+          "fontWeight": "normal",
+          "fontStyle": "normal",
+          "textDecoration": "none",
+          "color": "#000000",
+          "x": 80,
+          "y": 130,
+          "resizble": false
+        }
+      ]
+      
+    )
+  }, [])
+  
+
   if (isMobile) {
     return <div style={{ padding: '20px', textAlign: 'center' }}>⚠️ Please use this app on a desktop device.</div>;
   }
@@ -296,8 +363,8 @@ export default function CreateVisitCard() {
                   <TabsContent value="export" className="flex flex-col justify-center px-3">
                     <h4 className="text-2xl text-center">Download visit card</h4>
                     <Button onClick={downloadCardAsImage} className="p-3 m-2 bg-blue-500 rounded flex"><DownloadIcon />Download card as a image</Button>
-                    <Button onClick={downloadCardAsPDF} className="p-3 m-2 bg-blue-500 rounded flex"><DownloadIcon />Download card as a PDF</Button>
-                    <Button onClick={renderCard} className="p-3 m-2 bg-blue-500 rounded flex"><DownloadIcon />render</Button>
+                    <Button onClick={downloadCardAsPDF} hidden className="p-3 m-2 bg-blue-500 rounded flex"><DownloadIcon />Download card as a PDF</Button>
+                    <Button onClick={renderCard} hidden className="p-3 m-2 bg-blue-500 rounded flex"><DownloadIcon />render</Button>
                   </TabsContent>
                 </div>
               </div>
@@ -319,7 +386,14 @@ export default function CreateVisitCard() {
                     className="absolute w-[577.612px] h-[324.800px]"
                     style={{ zIndex: 2, position: "absolute" }}
                   >
-                    {el.type === "text" && <span style={{ color: el.color, fontSize: el.fontSize, fontFamily: el.fontFamily, fontWeight: el.fontWeight, fontStyle: el.fontStyle, textDecoration: el.textDecoration, backgroundColor: "transparent", border: "nonde" }}>{el.content}</span>}
+                    {el.type === "text" && <span style={{
+                      border: "none",
+                      outline: "none",
+                      textDecoration: "none",
+                      background: "transparent",
+                      color: el.color, fontSize: el.fontSize, fontFamily: el.fontFamily, fontWeight: el.fontWeight, fontStyle: el.fontStyle, backgroundColor: "transparent", border: "none", width: "auto", height: "auto"
+                    }}
+                    className="border-none">{el.content}</span>}
                     {el.type === "image" && <img src={el.content} alt="Image" className="w-12 h-12" />}
                     {el.type === "icon" && <IconRenderer iconName={el.content} color={el.color} size={el.fontSize} className="bg-transparent border-none" />}
                   </Rnd>
