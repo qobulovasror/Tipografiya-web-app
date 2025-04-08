@@ -42,7 +42,7 @@ export function BackgroundImages({setCardBackground}: Props) {
   return (
     <>
       <div className="grid grid-cols-2">
-        {Array(24).fill(1).map((_, index) => (
+        {Array(20).fill(1).map((_, index) => (
           <img
             key={index}
             src={`/images/img_for_cardBg/imgs${index+1}.jpg`}

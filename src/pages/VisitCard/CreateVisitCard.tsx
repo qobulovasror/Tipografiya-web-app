@@ -130,6 +130,10 @@ export default function CreateVisitCard() {
     });
   };
 
+  const renderCard = () => {
+    editor?.canvas.renderAll();
+  }
+
   const { editor, onReady } = useFabricJSEditor();
 
   const AddShapeHandler = (text: "rectangle" | "circle" | "line") => {
@@ -288,11 +292,12 @@ export default function CreateVisitCard() {
                     </Card>
                   </TabsContent>
 
-                  {/* addimg */}
+                  {/* dowmload */}
                   <TabsContent value="export" className="flex flex-col justify-center px-3">
                     <h4 className="text-2xl text-center">Download visit card</h4>
                     <Button onClick={downloadCardAsImage} className="p-3 m-2 bg-blue-500 rounded flex"><DownloadIcon />Download card as a image</Button>
                     <Button onClick={downloadCardAsPDF} className="p-3 m-2 bg-blue-500 rounded flex"><DownloadIcon />Download card as a PDF</Button>
+                    <Button onClick={renderCard} className="p-3 m-2 bg-blue-500 rounded flex"><DownloadIcon />render</Button>
                   </TabsContent>
                 </div>
               </div>
@@ -302,18 +307,21 @@ export default function CreateVisitCard() {
           {/* playground */}
           <ResizablePanel>
             <div className="w-full h-full flex justify-center items-center py-10 bg-gray-300 dark:bg-gray-500">
-              <Card id="visit-card-preview" className="rounded-lg p-2 border border-gray-300" style={{ width: "577.612px", height: "324.800px", background: cardBackground.startsWith("url") ? `${cardBackground} center/cover no-repeat` : cardBackground }}>
-                <FabricJSCanvas className="sample-canvas w-full h-full" onReady={onReady} />
+              <Card id="visit-card-preview" className="relative rounded-lg p-2 border border-gray-300 overflow-hidden w-full h-full" style={{ width: "577.612px", height: "324.800px", background: cardBackground.startsWith("url") ? `${cardBackground} center/cover no-repeat` : cardBackground }}>
+                <FabricJSCanvas className="absolute top-0 left-0 w-[577px] h-full" onReady={onReady} />
                 {elements.map((el) => (
                   <Rnd
                     key={el.id}
                     onDragStop={(_, d) => updateElement(el.id, { x: d.x, y: d.y })}
                     default={{ x: el.x, y: el.y, width: "auto", height: "auto" }}
                     bounds="parent"
-                    enableResizing={el.resizble}>
-                    {el.type === "text" && <span style={{ color: el.color, fontSize: el.fontSize, fontFamily: el.fontFamily, fontWeight: el.fontWeight, fontStyle: el.fontStyle, textDecoration: el.textDecoration }}>{el.content}</span>}
+                    enableResizing={el.resizble}
+                    className="absolute w-[577.612px] h-[324.800px]"
+                    style={{ zIndex: 2, position: "absolute" }}
+                  >
+                    {el.type === "text" && <span style={{ color: el.color, fontSize: el.fontSize, fontFamily: el.fontFamily, fontWeight: el.fontWeight, fontStyle: el.fontStyle, textDecoration: el.textDecoration, backgroundColor: "transparent", border: "nonde" }}>{el.content}</span>}
                     {el.type === "image" && <img src={el.content} alt="Image" className="w-12 h-12" />}
-                    {el.type === "icon" && <IconRenderer iconName={el.content} color={el.color} size={el.fontSize} className="" />}
+                    {el.type === "icon" && <IconRenderer iconName={el.content} color={el.color} size={el.fontSize} className="bg-transparent border-none" />}
                   </Rnd>
                 ))}
               </Card>

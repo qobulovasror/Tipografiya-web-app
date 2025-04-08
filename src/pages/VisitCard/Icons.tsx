@@ -328,6 +328,13 @@ import {
   ArrowDownLeftIcon, ArrowDownRightIcon, AlarmCheckIcon, AlarmClockIcon,
   AlarmClockOffIcon, AlarmPlusIcon, AlarmSmokeIcon, MailWarningIcon,
   ArrowUpLeftIcon, ArrowUpRightIcon, ArrowUpDownIcon,
+  Phone, PhoneCall, PhoneIncoming, PhoneOutgoing,
+  Mail,
+  MapPin,
+  Globe,
+  Navigation,
+  Linkedin,
+  X,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -671,6 +678,20 @@ const icons = [
   {name: "ArrowUpLeft", component: ArrowUpLeftIcon}, 
   {name: "ArrowUpRight", component: ArrowUpRightIcon}, 
   {name: "ArrowUpDown", component: ArrowUpDownIcon},
+  
+
+  {name: "Phone", component: Phone},
+  {name: "PhoneCall", component: PhoneCall},
+  {name: "PhoneIncoming", component: PhoneIncoming},
+  {name: "PhoneOutgoing", component: PhoneOutgoing},
+  {name: "Mail", component: Mail },
+  {name: "MapPin", component: MapPin },
+  {name: "Globe", component: Globe },
+  {name: "Navigation", component: Navigation  },
+  {name: "Telegram", component: Navigation  },
+  {name: "Linkedin", component: Linkedin  },
+  {name: "X", component: X  },
+
 ];
 
 const iconsStyle = "w-7 h-7 cursor-pointer hover:bg-blue-600 rounded text-3xl";

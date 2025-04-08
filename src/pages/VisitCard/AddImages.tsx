@@ -46,8 +46,6 @@ export function AddText({ addElementHandler }: { addElementHandler: (text: "text
     <>
       <Label>Text</Label>
       <Input value={input} onChange={e => setInput(e.target.value)} type="text" placeholder="type here" className="my-2" />
-      {/* <Label>Color</Label>
-      <Input type="color" /> */}
       <Button className="my-2 bg-blue-500" onClick={addHandler}>Add</Button>
     </>
   )

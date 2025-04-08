@@ -6,7 +6,7 @@ imgs = os.listdir("./")
 
 for i in range(0, len(imgs)):
 	if not imgs[i] == "rename.py": 
-		os.renames(imgs[i], "img"+str(i+1)+".png")
+		os.renames(imgs[i], "imgs"+str(i+1)+".jpg")
 
 
 
