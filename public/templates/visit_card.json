@@ -1,0 +1,438 @@
+[
+  {
+    "type": "visit-card",
+    "id": 1,
+    "bg": "#ffffff",
+    "elements": [
+      {
+        "type": "text",
+        "id": "company-name",
+        "content": "Minimalist Co.",
+        "fontFamily": "Helvetica",
+        "fontSize": 28,
+        "fontWeight": "bold",
+        "fontStyle": "normal",
+        "textDecoration": "none",
+        "color": "#1a1a1a",
+        "x": 40,
+        "y": 40,
+        "resizble": false
+      },
+      {
+        "type": "text",
+        "id": "tagline",
+        "content": "Creative Solutions",
+        "fontFamily": "Helvetica",
+        "fontSize": 16,
+        "fontWeight": "normal",
+        "fontStyle": "italic",
+        "textDecoration": "none",
+        "color": "#4a4a4a",
+        "x": 42,
+        "y": 80,
+        "resizble": false
+      },
+      {
+        "type": "icon",
+        "id": "phone-icon",
+        "content": "Phone",
+        "fontSize": 10,
+        "fontFamily": "Arial",
+        "fontWeight": "normal",
+        "fontStyle": "normal",
+        "textDecoration": "none",
+        "color": "#000000",
+        "x": 40,
+        "y": 130,
+        "resizble": false
+      },
+      {
+        "type": "text",
+        "id": "phone-text",
+        "content": "+123 456 7890",
+        "fontFamily": "Arial",
+        "fontSize": 14,
+        "fontWeight": "normal",
+        "fontStyle": "normal",
+        "textDecoration": "none",
+        "color": "#000000",
+        "x": 80,
+        "y": 130,
+        "resizble": false
+      }
+    ]
+  },
+  {
+    "type": "visit-card",
+    "id": 2,
+    "bg": "#ffffff",
+    "elements": [
+      {
+        "type": "text",
+        "id": "company",
+        "content": "CorpX Solutions",
+        "fontFamily": "Times New Roman",
+        "fontSize": 26,
+        "fontWeight": "bold",
+        "fontStyle": "normal",
+        "textDecoration": "none",
+        "color": "#003366",
+        "x": 50,
+        "y": 30,
+        "resizble": false
+      },
+      {
+        "type": "text",
+        "id": "name",
+        "content": "John Doe",
+        "fontFamily": "Georgia",
+        "fontSize": 22,
+        "fontWeight": "bold",
+        "fontStyle": "italic",
+        "textDecoration": "none",
+        "color": "#000000",
+        "x": 50,
+        "y": 75,
+        "resizble": false
+      },
+      {
+        "type": "icon",
+        "id": "email-icon",
+        "content": "Mail",
+        "fontFamily": "Arial",
+        "fontSize": 10,
+        "fontWeight": "normal",
+        "fontStyle": "normal",
+        "textDecoration": "none",
+        "color": "#000000",
+        "x": 50,
+        "y": 120,
+        "resizble": false
+      },
+      {
+        "type": "text",
+        "id": "email-text",
+        "content": "john@corpx.com",
+        "fontFamily": "Arial",
+        "fontSize": 14,
+        "fontWeight": "normal",
+        "fontStyle": "normal",
+        "textDecoration": "none",
+        "color": "#000000",
+        "x": 90,
+        "y": 120,
+        "resizble": false
+      }
+    ]
+  },
+  {
+    "type": "visit-card",
+    "id": 3,
+    "bg": "#ffffff",
+    "elements": [
+      {
+        "type": "text",
+        "id": "designer-name",
+        "content": "Alex Pixel",
+        "fontFamily": "Courier New",
+        "fontSize": 28,
+        "fontWeight": "bold",
+        "fontStyle": "normal",
+        "textDecoration": "underline",
+        "color": "#ff0066",
+        "x": 50,
+        "y": 40,
+        "resizble": false
+      },
+      {
+        "type": "text",
+        "id": "profession",
+        "content": "Graphic Designer",
+        "fontFamily": "Courier New",
+        "fontSize": 18,
+        "fontWeight": "normal",
+        "fontStyle": "italic",
+        "textDecoration": "none",
+        "color": "#333333",
+        "x": 52,
+        "y": 80,
+        "resizble": false
+      },
+      {
+        "type": "icon",
+        "id": "globe",
+        "content": "Globe",
+        "fontFamily": "Arial",
+        "fontSize": 10,
+        "fontWeight": "normal",
+        "fontStyle": "normal",
+        "textDecoration": "none",
+        "color": "#000000",
+        "x": 50,
+        "y": 130,
+        "resizble": false
+      },
+      {
+        "type": "text",
+        "id": "website",
+        "content": "www.alexpixel.dev",
+        "fontFamily": "Courier New",
+        "fontSize": 14,
+        "fontWeight": "normal",
+        "fontStyle": "normal",
+        "textDecoration": "none",
+        "color": "#000000",
+        "x": 90,
+        "y": 130,
+        "resizble": false
+      }
+    ]
+  },
+  {
+    "type": "visit-card",
+    "id": 4,
+    "bg": "#ffffff",
+    "elements": [
+      {
+        "type": "text",
+        "id": "company",
+        "content": "BlueWave Agency",
+        "fontFamily": "Helvetica",
+        "fontSize": 26,
+        "fontWeight": "bold",
+        "color": "#004080",
+        "x": 40,
+        "y": 40,
+        "resizble": false
+      },
+      {
+        "type": "text",
+        "id": "role",
+        "content": "Design & Marketing",
+        "fontFamily": "Helvetica",
+        "fontSize": 14,
+        "color": "#0066cc",
+        "x": 42,
+        "y": 70,
+        "resizble": false
+      },
+      {
+        "type": "icon",
+        "id": "phone-icon",
+        "content": "Phone",
+        "fontSize": 8,
+        "color": "#004080",
+        "x": 40,
+        "y": 120,
+        "resizble": false
+      },
+      {
+        "type": "text",
+        "id": "phone",
+        "content": "+998 90 123 45 67",
+        "fontFamily": "Arial",
+        "fontSize": 16,
+        "color": "#000",
+        "x": 85,
+        "y": 118,
+        "resizble": false
+      },
+      {
+        "type": "icon",
+        "id": "email-icon",
+        "content": "Mail",
+        "fontSize": 8,
+        "color": "#004080",
+        "x": 40,
+        "y": 150,
+        "resizble": false
+      },
+      {
+        "type": "text",
+        "id": "email",
+        "content": "contact@bluewave.com",
+        "fontFamily": "Arial",
+        "fontSize": 16,
+        "color": "#000",
+        "x": 85,
+        "y": 148,
+        "resizble": false
+      }
+    ]
+  },
+  {
+    "type": "visit-card",
+    "id": 5,
+    "bg": "#ffffff",
+    "elements": [
+      {
+        "type": "text",
+        "id": "company",
+        "content": "GreenTech",
+        "fontFamily": "Verdana",
+        "fontSize": 28,
+        "fontWeight": "bold",
+        "color": "#006400",
+        "x": 50,
+        "y": 40,
+        "resizble": false
+      },
+      {
+        "type": "text",
+        "id": "position",
+        "content": "Sustainable Innovation",
+        "fontFamily": "Verdana",
+        "fontSize": 14,
+        "fontStyle": "italic",
+        "color": "#228B22",
+        "x": 52,
+        "y": 72,
+        "resizble": false
+      },
+      {
+        "type": "icon",
+        "id": "map",
+        "content": "MapPin",
+        "fontSize": 7,
+        "color": "#006400",
+        "x": 50,
+        "y": 120,
+        "resizble": false
+      },
+      {
+        "type": "text",
+        "id": "address",
+        "content": "Tashkent, Amir Temur Street",
+        "fontFamily": "Arial",
+        "fontSize": 15,
+        "color": "#000",
+        "x": 90,
+        "y": 118,
+        "resizble": false
+      }
+    ]
+  },
+  {
+    "type": "visit-card",
+    "id": 6,
+    "bg": "#000000",
+    "elements": [
+      {
+        "type": "text",
+        "id": "company",
+        "content": "Noir Studio",
+        "fontFamily": "Georgia",
+        "fontSize": 30,
+        "fontWeight": "bold",
+        "color": "#ffffff",
+        "x": 35,
+        "y": 50,
+        "resizble": false
+      },
+      {
+        "type": "text",
+        "id": "job",
+        "content": "Art Director",
+        "fontFamily": "Georgia",
+        "fontSize": 16,
+        "fontStyle": "italic",
+        "color": "#bbbbbb",
+        "x": 38,
+        "y": 90,
+        "resizble": false
+      },
+      {
+        "type": "text",
+        "id": "email",
+        "content": "noir@studio.com",
+        "fontFamily": "Arial",
+        "fontSize": 15,
+        "color": "#ffffff",
+        "x": 38,
+        "y": 150,
+        "resizble": false
+      }
+    ]
+  },
+  {
+    "type": "visit-card",
+    "id": 7,
+    "bg": "#ffffff",
+    "elements": [
+      {
+        "type": "text",
+        "id": "company",
+        "content": "BizCorp LLC",
+        "fontFamily": "Tahoma",
+        "fontSize": 24,
+        "fontWeight": "bold",
+        "color": "#2b2b2b",
+        "x": 30,
+        "y": 40,
+        "resizble": false
+      },
+      {
+        "type": "text",
+        "id": "website",
+        "content": "www.bizcorp.uz",
+        "fontFamily": "Tahoma",
+        "fontSize": 14,
+        "color": "#1f497d",
+        "x": 30,
+        "y": 80,
+        "resizble": false
+      },
+      {
+        "type": "text",
+        "id": "email",
+        "content": "support@bizcorp.uz",
+        "fontFamily": "Tahoma",
+        "fontSize": 14,
+        "color": "#1f497d",
+        "x": 30,
+        "y": 110,
+        "resizble": false
+      }
+    ]
+  },
+  {
+    "type": "visit-card",
+    "id": 8,
+    "bg": "#ffffff",
+    "elements":  [
+      {
+        "type": "text",
+        "id": "company",
+        "content": "ColorSplash",
+        "fontFamily": "Comic Sans MS",
+        "fontSize": 26,
+        "fontWeight": "bold",
+        "color": "#ff3399",
+        "x": 40,
+        "y": 50,
+        "resizble": false
+      },
+      {
+        "type": "icon",
+        "id": "globe",
+        "content": "Globe",
+        "fontSize": 7,
+        "color": "#ff6600",
+        "x": 40,
+        "y": 90,
+        "resizble": false
+      },
+      {
+        "type": "text",
+        "id": "site",
+        "content": "colorsplash.io",
+        "fontFamily": "Comic Sans MS",
+        "fontSize": 16,
+        "color": "#333333",
+        "x": 80,
+        "y": 88,
+        "resizble": false
+      }
+    ]
+  }
+]

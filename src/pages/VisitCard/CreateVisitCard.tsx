@@ -25,7 +25,7 @@ import { Label } from "@/components/ui/label";
 import { BackgroundColors, BackgroundImages } from "./Backgrounds";
 import { AddImages, AddShape, AddText } from "./AddImages";
 import { Icons, IconRenderer } from "./Icons";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { CardElementType } from "@/types/CardElement"
 import ElementSetting from "./ElementSetting";
 
@@ -35,7 +35,7 @@ import FileSaver from 'file-saver';
 
 
 export default function CreateVisitCard() {
-  // const { id } = useParams();
+  const { id } = useParams();
   const { theme } = useTheme()
   const [isMobile, setIsMobile] = useState(false);
   const [elements, setElements] = useState<CardElementType[]>([]);
@@ -216,68 +216,16 @@ export default function CreateVisitCard() {
 
 
   useEffect(() => {
-    setElements(
-      [
-        {
-          "type": "text",
-          "id": "company-name",
-          "content": "Minimalist Co.",
-          "fontFamily": "Helvetica",
-          "fontSize": 28,
-          "fontWeight": "bold",
-          "fontStyle": "normal",
-          "textDecoration": "none",
-          "color": "#1a1a1a",
-          "x": 40,
-          "y": 40,
-          "resizble": false
-        },
-        {
-          "type": "text",
-          "id": "tagline",
-          "content": "Creative Solutions",
-          "fontFamily": "Helvetica",
-          "fontSize": 16,
-          "fontWeight": "normal",
-          "fontStyle": "italic",
-          "textDecoration": "none",
-          "color": "#4a4a4a",
-          "x": 42,
-          "y": 80,
-          "resizble": false
-        },
-        {
-          "type": "icon",
-          "id": "phone-icon",
-          "content": "Phone",
-          "fontSize": 10,
-          "fontFamily": "Arial",
-          "fontWeight": "normal",
-          "fontStyle": "normal",
-          "textDecoration": "none",
-          "color": "#000000",
-          "x": 40,
-          "y": 130,
-          "resizble": false
-        },
-        {
-          "type": "text",
-          "id": "phone-text",
-          "content": "+123 456 7890",
-          "fontFamily": "Arial",
-          "fontSize": 14,
-          "fontWeight": "normal",
-          "fontStyle": "normal",
-          "textDecoration": "none",
-          "color": "#000000",
-          "x": 80,
-          "y": 130,
-          "resizble": false
-        }
-      ]
-      
-    )
-  }, [])
+    if(!id || isNaN(parseInt(id))) return;
+    fetch("/templates/visit_card.json")
+      .then(res => res.json())
+      .then(data => {
+        const selected = data.find((t: { id: number; }) => t.id === parseInt(id));
+        if(selected === undefined) return
+        setCardBackground(selected.bg);
+        setElements(selected.elements);
+      });
+  }, [id])
   
 
   if (isMobile) {
@@ -391,7 +339,7 @@ export default function CreateVisitCard() {
                       outline: "none",
                       textDecoration: "none",
                       background: "transparent",
-                      color: el.color, fontSize: el.fontSize, fontFamily: el.fontFamily, fontWeight: el.fontWeight, fontStyle: el.fontStyle, backgroundColor: "transparent", border: "none", width: "auto", height: "auto"
+                      color: el.color, fontSize: el.fontSize, fontFamily: el.fontFamily, fontWeight: el.fontWeight, fontStyle: el.fontStyle, backgroundColor: "transparent", width: "auto", height: "auto"
                     }}
                     className="border-none">{el.content}</span>}
                     {el.type === "image" && <img src={el.content} alt="Image" className="w-12 h-12" />}
