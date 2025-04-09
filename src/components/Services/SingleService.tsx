@@ -12,12 +12,12 @@ const SingleFeature = ({ service }: { service: Services }) => {
         <h3 className="mb-5 text-xl font-bold text-body-color dark:text-body-color-dark sm:text-2xl lg:text-xl xl:text-2xl">
           {title}
         </h3>
-        <p className="pr-[10px] text-base font-medium leading-relaxed text-body-color">
+        <p className="h-30 pr-[10px] text-base font-medium leading-relaxed text-body-color">
           {paragraph}
         </p>
-        <div className="flex gap-4">
-          <Link to={link} className="inline-block rounded-sm mt-4 p-3 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/90 dark:bg-blue-700/100 dark:hover:bg-blue-700/50">Go to use</Link>
-          <a href="/#templates" className="inline-block rounded-sm mt-4 p-3 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/90 border dark:hover:bg-blue-700/50">Select template</a>
+        <div className="flex gap-4 items-end">
+          <Link to={link} className="inline-block rounded-sm mt-4 p-3 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/90 dark:bg-blue-700/100 dark:hover:bg-blue-700/50">Foydanalish</Link>
+          <a href="/#templates" className="inline-block rounded-sm mt-4 p-3 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/90 border dark:hover:bg-blue-700/50">Shablon tanlash</a>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@
     "type": "visit-card",
     "id": 1,
     "bg": "#ffffff",
+    "img": "my-visit-card_1.png",
     "elements": [
       {
         "type": "text",
@@ -66,6 +67,7 @@
     "type": "visit-card",
     "id": 2,
     "bg": "#ffffff",
+    "img": "my-visit-card_1.png",
     "elements": [
       {
         "type": "text",
@@ -129,6 +131,7 @@
     "type": "visit-card",
     "id": 3,
     "bg": "#ffffff",
+    "img": "my-visit-card_1.png",
     "elements": [
       {
         "type": "text",
@@ -192,6 +195,7 @@
     "type": "visit-card",
     "id": 4,
     "bg": "#ffffff",
+    "img": "my-visit-card_1.png",
     "elements": [
       {
         "type": "text",
@@ -264,6 +268,7 @@
     "type": "visit-card",
     "id": 5,
     "bg": "#ffffff",
+    "img": "my-visit-card_1.png",
     "elements": [
       {
         "type": "text",
@@ -315,6 +320,7 @@
   {
     "type": "visit-card",
     "id": 6,
+    "img": "my-visit-card_1.png",
     "bg": "#000000",
     "elements": [
       {
@@ -358,6 +364,7 @@
     "type": "visit-card",
     "id": 7,
     "bg": "#ffffff",
+    "img": "my-visit-card_1.png",
     "elements": [
       {
         "type": "text",
@@ -399,6 +406,7 @@
     "type": "visit-card",
     "id": 8,
     "bg": "#ffffff",
+    "img": "my-visit-card_1.png",
     "elements":  [
       {
         "type": "text",

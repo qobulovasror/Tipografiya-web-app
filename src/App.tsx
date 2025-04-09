@@ -18,6 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/create-visit-card/:id" element={<CreateVisitCard />} />
+            <Route path="/create-visit-card" element={<CreateVisitCard />} />
             {/* <Route path="/create-banner" element={<CreateVisitCard />} /> */}
             {/* <Route path="/create-invitation-card" element={<CreateVisitCard />} /> */}
           </Routes>

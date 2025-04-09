@@ -1,12 +1,12 @@
 export type Template = {
   id: number;
-  title: string;
-  link: string;
-  category: string;
+  type: string;
+  elements: string;
+  bg: string;
   img: string;
 };
 
 export type Category = {
   id: number;
-  name: string;
+  name: "All" | "visit-card" | "invitation" | "banner";
 }
