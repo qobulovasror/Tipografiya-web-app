@@ -701,9 +701,9 @@ export function Icons({addElementHandler}: {addElementHandler: (text: "text" | "
   
   return (
     <>
-      <h4 className="text-2xl text-center">Icon qo'shish</h4>
+      <h4 className="text-2xl text-center">Add icon</h4>
       <Input type="search" placeholder="search icon" onChange={v => setInput(v.target.value)} />
-      <Label>Icon tanlash</Label>
+      <Label>select icon</Label>
       <Card className="my-2 h-96">
         <CardContent className="flex flex-row flex-wrap gap-2" style={{overflowY: "scroll", scrollbarWidth: "thin"}}>
           {icons.filter(i => i.name.toLocaleLowerCase().indexOf(input.toLocaleLowerCase())>-1).map(({name, component: Icon}, index) => (

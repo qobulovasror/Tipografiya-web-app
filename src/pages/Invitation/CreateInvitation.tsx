@@ -34,7 +34,7 @@ import domtoimage from 'dom-to-image-more';
 import FileSaver from 'file-saver';
 
 
-export default function CreateVisitCard() {
+export default function CreateInvitation() {
   const { id } = useParams();
   const { theme } = useTheme()
   const [isMobile, setIsMobile] = useState(false);
@@ -238,9 +238,9 @@ export default function CreateVisitCard() {
       <div className="header border-b">
         <div className="container mx-auto p-2">
           <div className="flex justify-between">
-            <h1 className="text-3xl font-bold text-body-color dark:text-body-color-dark">Tashrif qog'ozini yaratish</h1>
+            <h1 className="text-3xl font-bold text-body-color dark:text-body-color-dark">Visit Card Creator</h1>
             <div className="justify-center mr-4 items-center mt-2">
-              <BreadcrumbMenu currentPage="Tashrif qog'ozini yaratish" />
+              <BreadcrumbMenu currentPage="Create Visit Card" />
             </div>
             <ModeToggle />
           </div>
@@ -264,7 +264,7 @@ export default function CreateVisitCard() {
                 <div className="flex-1 p-2">
                   {/* text */}
                   <TabsContent value="addtext" className="flex flex-col justify-center px-3">
-                    <h4 className="text-2xl text-center">Yangi matn qo'shish</h4>
+                    <h4 className="text-2xl text-center">Add new text</h4>
                     <AddText addElementHandler={addElementHandler} />
                   </TabsContent>
 
@@ -275,14 +275,14 @@ export default function CreateVisitCard() {
 
                   {/* bg */}
                   <TabsContent value="addbg" className="flex flex-col justify-center px-3">
-                    <h4 className="text-2xl text-center">Orqa fonni almashtirish</h4>
-                    <Label className="mt-2">Rang tanlash</Label>
+                    <h4 className="text-2xl text-center">Change background</h4>
+                    <Label className="mt-2">select color</Label>
                     <Card className="my-2">
                       <CardContent className="flex flex-row flex-wrap justify-center gap-2 scroll-auto" >
                         <BackgroundColors setCardBackground={setCardBackground} />
                       </CardContent>
                     </Card>
-                    <Label className="mt-2">Rasm tanlash</Label>
+                    <Label className="mt-2">select imgages</Label>
                     <Card className="my-2 h-85" style={{ overflowY: "auto", scrollbarWidth: "thin" }}>
                       <CardContent className="flex flex-row flex-wrap justify-center gap-2 scroll-auto" >
                         <BackgroundImages setCardBackground={setCardBackground} />
@@ -292,14 +292,14 @@ export default function CreateVisitCard() {
 
                   {/* addimg */}
                   <TabsContent value="addimg" className="flex flex-col justify-center px-3">
-                    <h4 className="text-2xl text-center">Rasm qo'shish</h4>
-                    <Label className="mt-2">rasm tanlash</Label>
+                    <h4 className="text-2xl text-center">Add image</h4>
+                    <Label className="mt-2">select img</Label>
                     <Card className="my-2">
                       <CardContent className="flex flex-row flex-wrap justify-center gap-2 scroll-auto" >
                         <AddImages onAddImage={onAddImage} />
                       </CardContent>
                     </Card>
-                    <Label className="mt-2">shakil tanlash</Label>
+                    <Label className="mt-2">select shape</Label>
                     <Card className="my-2">
                       <CardContent className="flex flex-row flex-wrap justify-center gap-2 scroll-auto" >
                         <AddShape AddShapeHandler={AddShapeHandler} />
@@ -309,8 +309,8 @@ export default function CreateVisitCard() {
 
                   {/* dowmload */}
                   <TabsContent value="export" className="flex flex-col justify-center px-3">
-                    <h4 className="text-2xl text-center">Yuklab olish</h4>
-                    <Button onClick={downloadCardAsImage} className="p-3 m-2 bg-blue-500 rounded flex"><DownloadIcon />Rasm sifatida yuklab olish</Button>
+                    <h4 className="text-2xl text-center">Download visit card</h4>
+                    <Button onClick={downloadCardAsImage} className="p-3 m-2 bg-blue-500 rounded flex"><DownloadIcon />Download card as a image</Button>
                     <Button onClick={downloadCardAsPDF} hidden className="p-3 m-2 bg-blue-500 rounded flex"><DownloadIcon />Download card as a PDF</Button>
                     <Button onClick={renderCard} hidden className="p-3 m-2 bg-blue-500 rounded flex"><DownloadIcon />render</Button>
                   </TabsContent>
@@ -354,7 +354,7 @@ export default function CreateVisitCard() {
           <ResizablePanel minSize={17} maxSize={17} defaultSize={17} className="flex-col" >
             <Drawer open={openEditElem} onOpenChange={setOpenEditElem}>
               <div className="flex-col h-100">
-                <h4 className="text-2xl text-center">Boshqarish</h4>
+                <h4 className="text-2xl text-center">Control</h4>
                 <div className="flex-col border-b">
                   <div className="flex justify-between">
                     <div className="flex">
@@ -374,7 +374,7 @@ export default function CreateVisitCard() {
                       <div className="flex w-full my-2" key={index}>
                         <Label>
                           {
-                            el.type == "text" ? "matin" : "Icon"
+                            el.type == "text" ? "Text" : "Icon"
                           }
                         </Label>
                         {

@@ -20,26 +20,24 @@ export default function Home() {
                 data-wow-delay=".2s"
               >
                 <h1 className="mb-5 text-3xl font-bold leading-tight text-body-color dark:text-body-color-dark sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                  Free and Open-Source Next.js Template for Startup & SaaS
+                  Taklifnoma, tashrifnoma, tabriknoma — barchasi bir joyda!
                 </h1>
                 <p className="dark:text-body-color-dark mb-12 text-base !leading-relaxed text-body-color sm:text-lg md:text-xl">
-                  Startup is free Next.js template for startups and SaaS
-                  business websites comes with all the essential pages,
-                  components, and sections you need to launch a complete
-                  business website, built-with Next 13.x and Tailwind CSS.
+                  Endi siz nafaqat professional vizitkalar, balki chiroyli taklifnomalar va o‘zgacha tabriknomalarni ham yaratishingiz mumkin. Siz oson yaratish, tez sozlash va darhol yuklab olish imkoniyati mavjud.
+                  Uzingizga mos bo‘lgan shablonlari tanlang va yarating!
                 </p>
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                   <a
-                    href="https://nextjstemplates.com/templates/saas-starter-startup"
+                    href="/#templates"
                     className="rounded-sm px-8 py-4 text-base text-white font-semibold bg-blue-700 hover:bg-blue-800 duration-300 ease-in-out hover:bg-blue/80"
                   >
-                    🔥 Get Pro
+                    🔥Shablonni tanlash
                   </a>
                   <a
-                    href="https://github.com/NextJSTemplates/startup-nextjs"
+                    href="/#services"
                     className="inline-block rounded-sm bg-black px-8 py-4 text-base font-semibold text-body-color dark:text-body-color-dark duration-300 ease-in-out hover:bg-black/90 dark:bg-white/10 dark:hover:bg-white/5"
                   >
-                    Star on GitHub
+                    ✏️ Dizayn qilishni boshlash
                   </a>
                 </div>
               </div>

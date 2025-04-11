@@ -4,6 +4,7 @@ import { ThemeProvider, useTheme } from "@/components/theme-provider"
 import Home from "./pages/Home";
 import { useEffect } from 'react';
 import CreateVisitCard from './pages/VisitCard/CreateVisitCard';
+import CreateInvitation from './pages/Invitation/CreateInvitation';
 
 function App() {
   const { theme } = useTheme();
@@ -19,8 +20,9 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/create-visit-card/:id" element={<CreateVisitCard />} />
             <Route path="/create-visit-card" element={<CreateVisitCard />} />
+            <Route path="/create-invitation-card" element={<CreateInvitation />} />
+
             {/* <Route path="/create-banner" element={<CreateVisitCard />} /> */}
-            {/* <Route path="/create-invitation-card" element={<CreateVisitCard />} /> */}
           </Routes>
         </Router>
       </ThemeProvider>

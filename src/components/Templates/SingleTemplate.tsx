@@ -30,8 +30,4 @@ const SingleTemplate = ({ template }: { template: Template }) => {
 };
 
 
-
-
-
-
 export default SingleTemplate;
